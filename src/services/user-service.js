@@ -15,15 +15,6 @@ class UserService {
         }
     }
 
-    async destroy(userId) {
-        try {
-            const res = await this.userRepository.destroy(userId)
-            return res
-        } catch (error) {
-            console.log("Something went wrong in Repository.")
-            throw (error)
-        }
-    }
 }
 
 module.exports = UserService
