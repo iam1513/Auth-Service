@@ -5,7 +5,7 @@ const bodyParser = require("body-parser")
 const apiRoutes = require("./routes")
 
 // const UserService = require("./services/user-service")
-
+const db = require("./models")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -23,6 +23,10 @@ function startServer() {
         // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9tM0BnbWFpbC5jb20iLCJpZCI6NiwiaWF0IjoxNzMyMjE2OTA5LCJleHAiOjE3MzIyMjA1MDl9.GOVLJ9HLwtXpr77Mla1O3Yd-wug_H99PUYIOBP0PzcA"
         // const res = await userService.verifyToken(token, ServerConfig.JWT_KEY)
         // console.log(res)
+
+        if (process.env.DB_SYNC) {
+            db.sequelize.sync({ alter: true })
+        }
     })
 }
 
