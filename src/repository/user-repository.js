@@ -34,7 +34,7 @@ class UserRepository {
             })
             return user
         } catch (error) {
-            console.log("Something went wrong in Repository.")
+            console.log("Something went wrong in Repository while getting user.")
             throw (error)
         }
     }
