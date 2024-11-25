@@ -1,6 +1,8 @@
 const { where } = require("sequelize")
 const { User, Role } = require("../models")
 const ValidationError = require("../utils/validation-error")
+const ClientError = require("../utils/client-error")
+const { StatusCodes } = require("http-status-codes")
 
 class UserRepository {
     async create(data) {
@@ -52,6 +54,14 @@ class UserRepository {
                     email: email
                 }
             })
+            if (!user) {
+                throw new ClientError(
+                    "AttributeNotFound",
+                    "Invalid email sent in the request",
+                    "Please check the email as no record found in database",
+                    StatusCodes.NOT_FOUND
+                )
+            }
             return user
         } catch (error) {
             console.log("Something went wrong in Repository.")
