@@ -16,11 +16,11 @@ const create = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             success: false,
-            message: "Something went wrong while creating an user.",
-            error: error
+            message: error.message,
+            error: error.explanation
         })
     }
 }
@@ -67,6 +67,27 @@ const isAuthenticated = async (req, res) => {
     }
 }
 
+const isAdmin = async (req, res) => {
+    try {
+        const response = await userService.isAdmin(req.body.id)
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: "Successfully checked Admin Role",
+            err: {}
+
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Something went wrong while Checking admin role.",
+            error: error
+        })
+    }
+}
+
 module.exports = {
-    create, signIn, isAuthenticated
+    create, signIn, isAuthenticated, isAdmin
 }
